@@ -1,0 +1,5 @@
+streamlit
+crewai
+weaviate-client
+llama-index
+python-dotenv
