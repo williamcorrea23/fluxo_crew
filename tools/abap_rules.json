@@ -1,0 +1,53 @@
+{
+  "keywords": [
+    "REPORT", "PROGRAM", "FUNCTION-POOL", "MODULE", "CLASS", "ENDCLASS",
+    "METHOD", "ENDMETHOD", "DATA", "CONSTANTS", "TYPES", "TABLES",
+    "WRITE", "READ TABLE", "APPEND", "INSERT", "DELETE", "MODIFY",
+    "LOOP", "ENDLOOP", "DO", "ENDDO", "WHILE", "ENDWHILE",
+    "IF", "ELSE", "ENDIF", "CASE", "WHEN", "ENDCASE",
+    "FORM", "ENDFORM", "PERFORM",
+    "CALL FUNCTION", "CALL TRANSACTION", "MESSAGE",
+    "SELECT", "ENDSELECT", "OPEN CURSOR", "FETCH NEXT CURSOR",
+    "INITIALIZATION", "START-OF-SELECTION", "END-OF-SELECTION",
+    "TOP-OF-PAGE", "END-OF-PAGE",
+    "MODULE", "ENDMODULE",
+    "PROCESS BEFORE OUTPUT", "PROCESS AFTER INPUT"
+  ],
+  "rules": {
+    "program_start": ["REPORT", "PROGRAM", "CLASS", "FUNCTION-POOL", "MODULE"],
+    "must_end_with_dot": true,
+    "block_structures": {
+      "IF": "ENDIF",
+      "CASE": "ENDCASE",
+      "DO": "ENDDO",
+      "LOOP": "ENDLOOP",
+      "WHILE": "ENDWHILE",
+      "CLASS": "ENDCLASS",
+      "METHOD": "ENDMETHOD",
+      "FORM": "ENDFORM",
+      "MODULE": "ENDMODULE"
+    },
+    "events": [
+      "INITIALIZATION",
+      "START-OF-SELECTION",
+      "END-OF-SELECTION",
+      "TOP-OF-PAGE",
+      "END-OF-PAGE"
+    ]
+  },
+  "best_practices": {
+    "avoid": [
+      "SELECT *",
+      "MOVE-CORRESPONDING without field check",
+      "uso de variáveis globais sem DATA",
+      "WRITE em mensagens críticas"
+    ],
+    "recommend": [
+      "usar READ TABLE ... BINARY SEARCH para performance",
+      "usar constantes via CONSTANTS para valores fixos",
+      "separar lógica em FORM ou METHODS",
+      "usar estruturas OO com CLASSES e METHODS",
+      "usar mensagens via MESSAGE em vez de WRITE em exceções"
+    ]
+  }
+}
