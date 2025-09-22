@@ -1,13 +1,23 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "minha-crew"
+name = "sap-crewai-hub"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "crewai-tools>=0.17.0",
-    "crewai>=0.86.0",
-    "pypdf2>=3.0.1",
-    "streamlit>=1.41.1",
-    "python-dotenv>=1.0.1",
+description = "SAP CrewAI Hub - Multi-agent ABAP coding assistant"
+authors = [
+    { name = "Seu Nome", email = "seuemail@exemplo.com" }
 ]
+dependencies = [
+    "streamlit",
+    "crewai",
+    "weaviate-client",
+    "llama-index",
+    "python-dotenv",
+    "openai"
+]
+
+[tool.streamlit]
+serverAddress = "0.0.0.0"
+serverPort = 8501
