@@ -5,10 +5,10 @@ from llama_index import load_index_from_storage, StorageContext
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 
 # Carrega regras ABAP
-with open("tools/abap_rules.json", "r", encoding="utf-8") as f:
+with open(os.path.join(os.path.dirname(__file__), "abap_rules.json"), "r", encoding="utf-8") as f:
     ABAP_RULES = json.load(f)
 
-# OpenAI GPT-5-Nano para sugestões
+# OpenAI
 openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 # RAG com Weaviate
@@ -18,17 +18,21 @@ client = weaviate.Client(
 )
 vector_store = WeaviateVectorStore(weaviate_client=client, index_name="ABAPDocs")
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
-index = load_index_from_storage(storage_context)
-retriever = index.as_retriever()
+
+try:
+    index = load_index_from_storage(storage_context)
+    retriever = index.as_retriever()
+except Exception:
+    retriever = None
 
 ABAPLINT_API = "http://localhost:8080"  # opcional
 
 @tool("abap_validator_tool")
 def abap_validator_tool(code: str) -> str:
-    """Valida código ABAP (JSON rules + abaplint + RAG + GPT-5-Nano)."""
+    """Valida código ABAP em várias camadas."""
     errors = []
 
-    # --- Camada 1: Regras locais ---
+    # --- Camada 1: JSON rules ---
     if not any(code.strip().upper().startswith(start) for start in ABAP_RULES["rules"]["program_start"]):
         errors.append("❌ Programa deve começar com REPORT, PROGRAM, CLASS, FUNCTION-POOL ou MODULE POOL.")
 
@@ -63,8 +67,10 @@ def abap_validator_tool(code: str) -> str:
         abaplint_result = "(⚠️ abaplint não disponível)"
 
     # --- Camada 3: RAG ---
-    rag_info = retriever.retrieve("ABAP regras de sintaxe")
-    rag_text = "\n".join([r.text for r in rag_info[:2]]) if rag_info else "Nenhuma explicação encontrada."
+    rag_text = "Nenhuma explicação encontrada."
+    if retriever:
+        rag_info = retriever.retrieve("ABAP regras de sintaxe")
+        rag_text = "\n".join([r.text for r in rag_info[:2]]) if rag_info else rag_text
 
     # --- Camada 4: GPT-5-Nano ---
     gpt_response = ""
