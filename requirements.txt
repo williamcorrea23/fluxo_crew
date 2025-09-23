@@ -1,6 +1,8 @@
 streamlit
-weaviate-client
-llama-index
 crewai
 crewai-tools
+weaviate-client
+llama-index
 python-dotenv
+openai
+requests
