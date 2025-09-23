@@ -1,8 +1,19 @@
 import os, re, json, requests, weaviate
-from crewai_tools import tool
+
+
+# Import seguro
+try:
+    from crewai_tools import tool
+except ImportError:
+    def tool(name=None):
+        def wrapper(func):
+            return func
+        return wrapper
+
 from openai import OpenAI
 from llama_index import load_index_from_storage, StorageContext
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
+
 
 # Carrega regras ABAP
 with open(os.path.join(os.path.dirname(__file__), "abap_rules.json"), "r", encoding="utf-8") as f:
