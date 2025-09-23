@@ -54,6 +54,13 @@ def abap_validator_tool(code: str) -> str:
             errors.append(f"⚠️ Má prática detectada: {bad}")
 
     base_result = "✅ OK - Código ABAP válido." if not errors else "\n".join(errors)
+try:
+    from crewai_tools import tool
+except ImportError:
+    def tool(name=None):
+        def wrapper(func):
+            return func
+        return wrapper
 
     # --- Camada 2: abaplint ---
     abaplint_result = ""
