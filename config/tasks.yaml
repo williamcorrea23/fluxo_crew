@@ -1,0 +1,30 @@
+gerar_programa:
+  description: >
+    Gere um programa ABAP baseado na descrição fornecida pelo usuário: {descricao}.
+    Inclua a estrutura completa com declarações, eventos e lógica.
+  expected_output: >
+    Código ABAP pronto para ser revisado.
+  agent: programador
+
+revisar_programa:
+  description: >
+    Revise o código ABAP gerado. 
+    Verifique boas práticas, legibilidade e mantenabilidade.
+  expected_output: >
+    Relatório de revisão + versão revisada do código.
+  agent: revisor
+
+validar_programa:
+  description: >
+    Valide o código ABAP em termos de sintaxe e boas práticas.
+    Utilize validadores internos e externos para confirmar.
+  expected_output: >
+    Lista de erros, avisos e sugestões.
+  agent: tester
+
+validar_funcional:
+  description: >
+    Analise se o código ABAP atende ao requisito funcional descrito pelo usuário.
+  expected_output: >
+    Relatório confirmando se a regra de negócio foi atendida ou sugerindo ajustes.
+  agent: funcional
