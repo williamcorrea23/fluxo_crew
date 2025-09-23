@@ -1,5 +1,4 @@
-
-# Import seguro
+# Import seguro do CrewAI Tools
 try:
     from crewai_tools import tool
 except ImportError:
@@ -10,15 +9,12 @@ except ImportError:
 
 @tool("xml_formatter_tool")
 def xml_formatter_tool(objeto: str) -> str:
-    """Formata código ABAP em um container XML padrão."""
-    xml_template = f"""
+    """Formata código ABAP em XML padrão."""
+    return f"""
 <ABAP_OBJECT>
   <TYPE>Program</TYPE>
   <CONTENT><![CDATA[
 {objeto}
   ]]></CONTENT>
 </ABAP_OBJECT>
-"""
-    return xml_template.strip()
-
-
+""".strip()
