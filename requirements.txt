@@ -1,8 +1,9 @@
-streamlit
+flask
+gunicorn
 crewai
 crewai-tools
 weaviate-client
 llama-index
-python-dotenv
 openai
 requests
+python-dotenv
